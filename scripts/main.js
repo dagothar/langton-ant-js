@@ -1,6 +1,6 @@
 $(document).ready(function() {
   
-  var langton = new Langton(160, 120);
+  var langton = new Langton(200, 150);
   
   var canvas = $('.board').get(0);
   langton.render(canvas);
@@ -11,7 +11,7 @@ $(document).ready(function() {
   var speed = $('.langton-speed').val();
   
   function calculateInterval(s) {
-    return 100 / Math.pow(2, s);
+    return 100 / Math.pow(2.5, s);
   }
   
   var interval = calculateInterval(speed);
@@ -28,9 +28,10 @@ $(document).ready(function() {
   });
   
   $('.langton-reset').click(function() {
-    langton.clear();
+    langton.clear(canvas);
     langton.render(canvas);
     iteration = 0;
+    $('.langton-iteration').text(iteration);
   });
   
   $('.langton-start-stop').click(function() {
@@ -61,7 +62,7 @@ $(document).ready(function() {
     }
   });
   
-  function getMousePos(e, client) {
+  /*function getMousePos(e, client) {
     var rect = client.getBoundingClientRect();
     return {
       x: e.clientX - rect.left,
@@ -90,6 +91,6 @@ $(document).ready(function() {
   
   $('.board').mouseout(function(e) {
     $(this).unbind('mousemove');
-  });
+  });*/
   
 });

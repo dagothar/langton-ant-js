@@ -3,21 +3,25 @@ var Langton = (function() {
   function Langton(width, height) {
     var width = width, height = height;
     var data = new Array2(width, height, 0);
-    var pos = { x: width/2, y: height/2 };
+    var pos = { x: Math.floor(width/2), y: Math.floor(height/3) };
     var dir = 0;
     
     this.Colors = {
-      0: '#000000',
-      1: '#ffffff'
+      0: '#ffffff',
+      1: '#000000'
     };
     
-    this.clear = function() {
+    this.clear = function(canvas) {
       data.apply(function(i, j, v) {
         return 0;
       });
-      pos.x = width/2;
-      pos.y = height/2;
+      pos.x = Math.floor(width/2);
+      pos.y = Math.floor(height/3);
       dir = 0;
+      
+      var ctx = canvas.getContext('2d');
+      ctx.fillStyle =  this.Colors[0];
+      ctx.fillRect(0, 0, canvas.getAttribute('width'), canvas.getAttribute('height'));
     };
     
     this.step = function() {
@@ -27,10 +31,10 @@ var Langton = (function() {
       /* update direction */
       if (color) {
         dir += 1;
-        if (dir > 7) dir = 0;
+        if (dir > 3) dir = 0;
       } else {
         dir -= 1;
-        if (dir < 0) dir = 7;
+        if (dir < 0) dir = 3;
       }
       
       /* toggle cell  color */
@@ -41,19 +45,11 @@ var Langton = (function() {
         case 0:
           pos.y -= 1; break;
         case 1:
-          pos.x += 1; pos.y -= 1; break;
-        case 2:
           pos.x += 1; break;
-        case 3:
-          pos.x += 1; pos.y += 1; break;
-        case 4:
+        case 2:
           pos.y += 1; break;
-        case 5:
-          pos.x -= 1; pos.y += 1; break;
-        case 6:
+        case 3:
           pos.x -= 1; break;
-        case 7:
-          pos.x -= 1; pos.y -= 1; break;
         default:
           break;
       }
@@ -65,8 +61,8 @@ var Langton = (function() {
       var dy = canvas.getAttribute('height') / height;
       var ctx = canvas.getContext('2d');
       
-      for (var x = 0; x < width; ++x) { 
-        for (var y = 0; y < height; ++y) {
+      for (var x = pos.x-1; x <= pos.x+1; ++x) { 
+        for (var y = pos.y-1; y <= pos.y+1; ++y) {
           ctx.fillStyle =  this.Colors[data.get(x, y)];
           ctx.fillRect(x * dx, y * dy, dx, dy);
         }
