@@ -1,0 +1,48 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8"/>
+  <title>Langton's ant</title>
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="styles/main.css"/>
+</head>
+
+<body>
+  <div class="header">
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<a class="navbar-brand text-center center-block" href="#">LANGTON'S ANT</a>
+			</div>
+		</nav>
+  </div>
+  
+  <div class="container">
+    <div class="row">
+      
+      <div class="col-md-10">
+        <canvas class="board" width="800" height="600"></canvas>
+      </div>
+      
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Iteration: <span class="langton-iteration">0</span></label>
+          <button type="button" class="langton-reset btn btn-default btn-block">Reset</button>
+          <button type="button" class="langton-step btn btn-default btn-block">Step</button>
+          <button type="button" class="langton-start-stop btn btn-default btn-block">Start/Stop</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="footer">
+  </div>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+  <script src="scripts/array2.js"></script>
+  <script src="scripts/langton.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+
+</html>
