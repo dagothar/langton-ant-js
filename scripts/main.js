@@ -8,6 +8,13 @@ $(document).ready(function() {
   var stepTimer = undefined;
   var running = false;
   var iteration = 0;
+  var speed = $('.langton-speed').val();
+  
+  function calculateInterval(s) {
+    return 100 / Math.pow(2, s);
+  }
+  
+  var interval = calculateInterval(speed);
   
   function step() {
     langton.step();
@@ -28,11 +35,29 @@ $(document).ready(function() {
   
   $('.langton-start-stop').click(function() {
     if (!running) {
-      stepTimer = setInterval(step, 50);
+      stepTimer = setInterval(step, interval);
       running = true;
     } else {
       clearInterval(stepTimer);
       running = false;
+    }
+  });
+  
+  $('.langton-speed').on('input', function() {
+    $(this).trigger('change');
+  });
+  
+  $('.langton-speed').change(function() {
+    var old_speed = speed;
+    speed = $(this).val();
+    
+    if (speed != old_speed) {
+      interval = calculateInterval(speed);
+      
+      if (running) {
+        clearInterval(stepTimer);
+        stepTimer = setInterval(step, interval);
+      }
     }
   });
   
