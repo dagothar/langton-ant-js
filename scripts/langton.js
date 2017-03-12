@@ -8,7 +8,8 @@ var Langton = (function() {
     
     this.Colors = {
       0: '#ffffff',
-      1: '#000000'
+      1: '#000000',
+      2: '#ff0000'
     };
     
     this.clear = function(canvas) {
@@ -55,18 +56,33 @@ var Langton = (function() {
       }
     }
     
-    this.render = function(canvas) {
+    this.render = function(canvas, mpos) {
       
       var dx = canvas.getAttribute('width') / width;
       var dy = canvas.getAttribute('height') / height;
       var ctx = canvas.getContext('2d');
       
-      for (var x = pos.x-1; x <= pos.x+1; ++x) { 
-        for (var y = pos.y-1; y <= pos.y+1; ++y) {
+      var x1 = pos.x-1;
+      var x2 = pos.x+1;
+      var y1 = pos.y-1;
+      var y2 = pos.y+1;
+      
+      if (mpos) {
+        x1 = mpos.x-1;
+        x2 = mpos.x+1;
+        y1 = mpos.y-1;
+        y2 = mpos.y+1;
+      }
+      
+      for (var x = x1; x <= x2; ++x) { 
+        for (var y = y1; y <= y2; ++y) {
           ctx.fillStyle =  this.Colors[data.get(x, y)];
           ctx.fillRect(x * dx, y * dy, dx, dy);
         }
       }
+      
+      ctx.fillStyle =  this.Colors[2];
+      ctx.fillRect(pos.x * dx, pos.y * dy, dx, dy);
     }
     
     this.getCellPos = function(canvas, mousePos) {
@@ -87,15 +103,15 @@ var Langton = (function() {
       } else {
         data.set(pos.x, pos.y, 0);
       }
-    }
+    };
     
     this.getCell = function(pos) {
       return data.get(pos.x, pos.y) == 1;
-    }
+    };
     
     this.setCell = function(pos, value) {
       data.set(pos.x, pos.y, value ? 1 : 0);
-    }
+    };
   };
   
   return Langton;

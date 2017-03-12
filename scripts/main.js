@@ -18,7 +18,7 @@ $(document).ready(function() {
   
   function step() {
     langton.step();
-    langton.render(canvas);
+    langton.render(canvas, false);
     ++iteration;
     $('.langton-iteration').text(iteration);
   };
@@ -29,7 +29,7 @@ $(document).ready(function() {
   
   $('.langton-reset').click(function() {
     langton.clear(canvas);
-    langton.render(canvas);
+    langton.render(canvas, true);
     iteration = 0;
     $('.langton-iteration').text(iteration);
   });
@@ -58,11 +58,12 @@ $(document).ready(function() {
       if (running) {
         clearInterval(stepTimer);
         stepTimer = setInterval(step, interval);
-      }
+      } 
     }
+
   });
   
-  /*function getMousePos(e, client) {
+  function getMousePos(e, client) {
     var rect = client.getBoundingClientRect();
     return {
       x: e.clientX - rect.left,
@@ -76,12 +77,13 @@ $(document).ready(function() {
     var pos = langton.getCellPos(canvas, getMousePos(e, canvas));
     paint = !langton.getCell(pos);
     langton.setCell(pos, paint);
-    langton.render(canvas);
+    langton.render(canvas, true);
     
     $(this).bind('mousemove', function(e) {
       var pos = langton.getCellPos(canvas, getMousePos(e, canvas));
       langton.setCell(pos, paint);
-      langton.render(canvas);
+      langton.render(canvas, pos);
+      //console.log(pos, paint);
     });
   });
   
@@ -91,6 +93,6 @@ $(document).ready(function() {
   
   $('.board').mouseout(function(e) {
     $(this).unbind('mousemove');
-  });*/
+  });
   
 });
